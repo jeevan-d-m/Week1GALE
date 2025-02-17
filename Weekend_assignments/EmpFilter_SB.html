@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Filkter</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <style>
+        .profile-img{
+                transition: transform 0.3s ease;
+                margin-left: 8px;
+                margin: 0 auto; 
+                display: block; 
+                height: 90px; 
+                width: 90px;
+                border-radius: 50%;
+        }
+
+        .profile-img:hover{
+            transform: scale(1.2);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container mt-4">
+        <h1 class="text-center">Employee Filter</h1>
+
+        <div class="row mb-3">
+
+            <div class="col-md-3">
+                <label for="name-filter" class="form-label">Employee Name</label>
+                <input type="text" id="name-search" class="form-control" placeholder="Search name">
+                <select id="name-filter" class="form-select mt-2"></select>
+            </div>
+
+            <div class="col-md-3">
+                <label for="type-filter" class="form-label">Employee Type</label>
+                <input type="text" id="type-search" class="form-control" placeholder="Search type">
+            <select id="type-filter" class="form-select mt-2"></select>
+            </div>
+
+            <div class="col-md-3">
+                <label for="address-filter" class="form-label">Address</label>
+                <input type="text" id="address-search" class="form-control" placeholder="Search Address">
+            <select id="address-filter" class="form-select mt-2"></select>
+            </div>
+
+            <div class="col-md-3">
+                <label for="designation-filter" class="form-label">Designation</label>
+                <input type="text" id="designation-search" class="form-control" placeholder="Search Designation">
+            <select id="designation-filter" class="form-select mt-2"></select>
+            </div>
+
+            <div class="col-md-3">
+                <label for="email-filter" class="form-label">Email id</label>
+                <input type="email" id="email-search" class="form-control" placeholder="Search Email">
+            <select id="email-filter" class="form-select mt-2"></select>
+            </div>
+        </div>
+
+        <table class="table table-bordered mt-3">
+            <thead class="table-dark">
+                <tr style="text-align: center;">
+                    <th>Serial Number</th>
+                    <th>Profile Picture</th>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Address</th>
+                    <th>Designation</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody id="employee-table-body">
+            </tbody>
+        </table>
+
+
+    </div>
+        
+
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function(){
+        const employees = [
+      { serial_no: 1, profile_image:"images/ViratKohli.jpeg", name: "Virat Kohli", type: "Full-Time", address: "Bengaluru", designation: "Manager", email:"Virat@gmail.com", linkedIn: "https://en.wikipedia.org/wiki/Virat_Kohli" },
+      { serial_no: 2, profile_image:"images/RohitSharma.jpeg", name: "Rohit Sharma", type: "Part-Time", address: "Mumbai", designation: "Developer", email: "Rohit@gmail.com" ,linkedIn: "https://en.wikipedia.org/wiki/Rohit_Sharma" },
+      { serial_no: 3, profile_image:"images/Bumrah.jpeg", name: "Jasprit Bumrah", type: "Full-Time", address: "Mumbai", designation: "Designer", email: "Bumrah@gmail.com", linkedIn: "https://en.wikipedia.org/wiki/Jasprit_Bumrah" },
+      { serial_no: 4, profile_image:"images/Raina.jpeg", name: "Suresh Raina", type: "Intern", address: "Chennai", designation: "Tester", email: "Raina@gmail.com", linkedIn: "https://en.wikipedia.org/wiki/Suresh_Raina"},
+      { serial_no: 5, profile_image:"images/Dhoni.jpeg", name: "M S Dhoni", type: "Part-time", address: "Chennai", designation: "Developer", email: "Dhoni@gmail.com", linkedIn: "https://en.wikipedia.org/wiki/MS_Dhoni"},
+      { serial_no: 6, profile_image:"images/YuvrajSingh.jpeg", name: "Yuvraj Singh", type: "Intern", address: "Bengaluru", designation: "Designer", email: "Yuvraj@gmail.com", linkedIn: "https://en.wikipedia.org/wiki/Yuvraj_Singh"},
+
+
+    ];
+
+    function generatetable(filtered_employee){
+        const tablebody = document.getElementById("employee-table-body");
+        tablebody.innerHTML = "";
+        filtered_employee.forEach(employee => {
+            const row = `<tr>
+                <td style="text-align: center; align-content:space-evenly;">${employee.serial_no}</td>
+                <td>
+                    <a href="${employee.linkedIn}">
+                    <img src="${employee.profile_image}" class="profile-img">
+                    </a>
+                </td>
+                <td style="text-align: center; align-content:space-evenly;"">
+                    <a href="${employee.linkedIn}">${employee.name}
+                </td>
+
+                <td style="text-align: center; align-content:space-evenly;"">${employee.type}</td>
+                <td style="text-align: center; align-content:space-evenly;"">${employee.address}</td>
+                <td style="text-align: center; align-content:space-evenly;"">${employee.designation}</td>
+                <td style="text-align: center; align-content:space-evenly;"">
+                    <a href="mailto:${employee.email}">${employee.email}</a>
+                </td>
+                </tr>`
+                tablebody.innerHTML += row;
+        });
+    }
+
+
+    function generatedropdown(id, key){
+        const dropdown = document.getElementById(id);
+        const uniquevalue = ["All", ...new Set(employees.map(emp => emp[key]))];
+        uniquevalue.forEach(value =>{
+            const option = document.createElement("option");
+            option.value = value;
+            option.textContent = value;
+            dropdown.appendChild(option);
+        });
+    }
+
+
+    function filteremployees(){
+        const namefltr = document.getElementById("name-filter").value;
+        const typefltr = document.getElementById("type-filter").value;
+        const addressfltr = document.getElementById("address-filter").value;
+        const designationfltr = document.getElementById("designation-filter").value;
+        const emailfltr = document.getElementById("email-filter").value;
+
+
+        const namesearch = document.getElementById("name-search").value.toLowerCase();
+        const typesearch = document.getElementById("type-search").value.toLowerCase();
+        const addresssearch = document.getElementById("address-search").value.toLowerCase();
+        const designationsearch = document.getElementById("designation-search").value.toLowerCase();
+        const emailsearch = document.getElementById("email-search").value.toLowerCase();
+
+        const filteremployee = employees.filter(employee =>
+            (namefltr === "All" || employee.name === namefltr) &&
+            (typefltr === "All" || employee.type === typefltr) &&
+            (addressfltr === "All" || employee.address === addressfltr) &&
+            (designationfltr === "All" || employee.designation === designationfltr) &&
+            (emailfltr === "All" || employee.email === emailfltr) &&
+
+            (employee.name.toLowerCase().includes(namesearch)) &&
+            (employee.type.toLowerCase().includes(typesearch)) &&
+            (employee.address.toLowerCase().includes(addresssearch)) &&
+            (employee.designation.toLowerCase().includes(designationsearch)) &&
+            (employee.email.toLowerCase().includes(emailsearch))
+
+        );
+
+        generatetable(filteremployee);
+    }
+
+    ["name", "type", "address", "designation", "email"].forEach(id => {
+        generatedropdown(`${id}-filter`, id);
+        document.getElementById(`${id}-filter`).addEventListener("change", filteremployees);
+        document.getElementById(`${id}-search`).addEventListener("input", filteremployees);
+
+    });
+
+    generatetable(employees);
+
+    });
+    </script>
+</body>
+</html>
