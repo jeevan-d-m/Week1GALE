@@ -24,7 +24,7 @@ class Demo():
 
 # [[[13,"preetam"]],[]]
 obj = Demo(6)
-obj.set(1,"jeevan")
+obj.set(1,["jeevan","apppu"])
 obj.set(2,"ullas")
 obj.set(13,"preetam")
 obj.set(4,"yashwanth")
